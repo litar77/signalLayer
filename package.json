@@ -1,0 +1,41 @@
+{
+  "name": "spaceojo",
+  "version": "1.0.0",
+  "description": "时空大数据渲染引擎",
+  "main": "app.js",
+  "files": [
+    "dist",
+    "src",
+    "debug.min.js",
+    "dist.min.js"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "start": "webpack-dev-server --progress --hot --open",
+    "start-local": "webpack-dev-server --env.local --progress --hot --open",
+    "dev": "webpack-dev-server --open",
+    "build": "webpack -p",
+    "build-debugger": "webpack ./bundle/debug.js -p -o ./debug.min.js --config ../../scripts/bundle.config.js",
+    "build-bundle": "webpack --config ../../scripts/bundle.config.js",
+    "prepublishOnly": "npm run build-debugger && npm run build-bundle && npm run build-bundle -- --env.dev"
+  },
+  "dependencies": {
+    "3d-tiles-renderer": "^0.1.2",
+    "@deck.gl/core": "^8.2.4",
+    "@deck.gl/layers": "^8.2.4",
+    "@luma.gl/engine": "^8.2.0",
+    "@luma.gl/webgl": "^8.2.0",
+    "babel-eslint": "^10.1.0",
+    "deck.gl": "^8.2.4",
+    "html-webpack-plugin": "^3.0.7",
+    "three": "^0.117.1",
+    "three.js": "^0.77.1"
+  },
+  "author": "taody",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
