@@ -2,6 +2,32 @@
 // const lon=121.52995;
 // const lat=31.210022;
 // const r=0.032
+export const LINE_DATA=[
+    {
+        sourcePosition:[121.52995,31.210022,10.0],
+        sourceTime:0.0,
+        targetPosition:[121.5234,31.17565,10.0],
+        targetTime:0.0,
+    },
+    {
+        sourcePosition:[121.5234,31.17565,10.0],
+        sourceTime:0.0,
+        targetPosition:[121.530123,31.199872,10.0],
+        targetTime:0.0,
+    },
+    {
+        sourcePosition:[121.530123,31.199872,10.0],
+        sourceTime:0.0,
+        targetPosition:[121.501295,31.21342,10.0],
+        targetTime:0.0,
+    },
+    {
+        sourcePosition:[121.501295,31.21342,10.0],
+        sourceTime:0.0,
+        targetPosition:[121.5277895,31.20998022,10.0],
+        targetTime:0.0,
+    },
+];
 
 export const SIGNAL_DATA=[
     {
