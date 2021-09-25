@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta charset="utf-8"/>
+
+		<title>3D Tiles Renderer Example</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                overflow: hidden;
+				font-family: Arial, Helvetica, sans-serif;
+				user-select: none;
+            }
+
+			canvas {
+				image-rendering: pixelated;
+				outline: none;
+			}
+        </style>
+    </head>
+
+    <body>
+        
+          <script type='module'>
+            
+            // import {INITIAL_VIEW_STATE,SoScene} from './scene/soScene.js'
+
+            // export const scene = new SoScene({
+            // initialViewState: INITIAL_VIEW_STATE,
+            // controller: true});
+
+            // scene.open("new",1);
+            let arr1=[1,2,3,4,5,6,7,8];
+            const arr2=[20,22,25];
+            // arr1.fill(arr2,3);
+            arr1[3]=arr2[2];
+            console.log(arr1.copyWithin(1,4,8));
+            console.log(arr1);
+
+
+        </script>
+    </body>
+</html>

@@ -1,36 +1,87 @@
 
 import {INITIAL_VIEW_STATE,SoScene} from './scene/soScene.js'
 
+const bUseMapbox=true;  //是用mapbox地图，还是矢量地图
+const bAddSignalLayer=true; //是否打开信号图层
+const bAddTrackLayer=true;  //是否打开轨迹图层
+const bExtruedBuilding=true;//是否挤压生成立体建筑，目前这种方式显示建筑效率较低，因此不提倡打开此开关
+
 export const scene = new SoScene({
   initialViewState: INITIAL_VIEW_STATE,
   controller: true});
 
-scene.open("new",1);
-scene.addSignalLayer();
+
+  if(bUseMapbox)
+  {
+    scene.open("mapbox");
+  }else
+  {
+    scene.open("vector",bExtruedBuilding);
+  }
+  
+  if(bAddSignalLayer)
+  {
+    scene.addSignalLayer();
+  }
+  
+  if(bAddTrackLayer)
+  {
+    scene.addTrajectoryLayer();
+  }
+  
+// scene.addLineLayer();
 // scene.addScatterLayer();
 // scene.addRingLayer();
 // scene.addRayLayer();
 // scene.addColumnLayer();
 
 if (window.Worker) {
+
   let signalWorker = new Worker("signalListener.js");
 
   signalWorker.onmessage = function (oEvent) {
+
+    const {msgType}=oEvent.data;
     
-    for(const sigpos of oEvent.data)
+    if(msgType==='signal')
     {
-      let {position}=sigpos;
-      // console.log("Worker received : " + position);
-      scene.pushSignal(position);
+      
+      const {sigpos}=oEvent.data;
+
+      for(const position of sigpos)
+      {
+        scene.pushSignal(position);
+      }
+    }else
+    {
+      const {trackingPoints}=oEvent.data;
+      
+      if(trackingPoints)
+      {
+        scene.pushTrackingPoints(trackingPoints);
+      }
+      
     }
     
   };
 
-  signalWorker.postMessage("start");
+  
+  //启动信号点发送线程
+  if(bAddSignalLayer)
+  {
+    signalWorker.postMessage("startPark");
+  }
+  
 
-}else {
+  if(bAddTrackLayer)
+  {
+    //启动轨迹发送线程
+    signalWorker.postMessage("stratTracking");
+  }
 
-	console.log('Your browser doesn\'t support web workers.')
+}else{
+
+  console.log('Your browser doesn\'t support web workers.')
 }
 
 /*
@@ -93,7 +144,7 @@ export const deck = new Deck({
 */
 // For automated test cases
 /* global document */
-document.body.style.margin = '0px';
+document.body.style.margin = '1px';
 
 
 // eslint-disable-next-line import/named

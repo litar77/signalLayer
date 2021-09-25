@@ -1,25 +1,10 @@
 // NOTE: To use this example standalone (e.g. outside of deck.gl repo)
 // delete the local development overrides at the bottom of this file
-const path = require('path');
+// const path = require('path');
+const {resolve} = require('path');
+const webpack = require('webpack');
 // const CopyPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-module.exports = {
-  entry: './src/app.js',
-  mode: 'development',
-  output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: 'app.js'
-  },
-  devServer: {
-      contentBase: './dist'
-  },
-  // plugins: [
-  //     new CopyPlugin([
-  //         { from: './3DTilesRendererJS/example/customMaterial.html', to: './' },
-  //     ]),
-  // ],
-};
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const CONFIG = {
   mode: 'development',
@@ -27,6 +12,14 @@ const CONFIG = {
   entry: {
     app: './app.js'
   },
+
+  resolve: {
+    alias: {
+      // From mapbox-gl-js README. Required for non-browserify bundlers (e.g. webpack):
+      'mapbox-gl$': resolve('./node_modules/mapbox-gl/dist/mapbox-gl.js')
+    }
+  },
+
   module: {
     rules: [
       {
@@ -47,7 +40,9 @@ const CONFIG = {
     ]
   },
 
-  plugins: [new HtmlWebpackPlugin({title: 'spaceojo'})]
+  // plugins: [new HtmlWebpackPlugin({title: 'spaceojo'})]
+   // Optional: Enables reading mapbox token from environment variable
+   plugins: [new webpack.EnvironmentPlugin({'MapboxAccessToken':'pk.eyJ1IjoibGl0YXIiLCJhIjoiY2thZ2h2ZWNvMDQwcjJzbHN2ZWF5cG53cyJ9.JccA8XgHr0953SgMLpiUtg'})]
 };
 
 // This line enables bundling against src in this repo rather than installed module
